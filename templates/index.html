@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Data</title>
+</head>
+<body>
+  <h1>Public API Entries</h1>
+  <button onclick="loadData()">Load Data</button>
+  <ul id="data-list"></ul>
+
+  <script>
+    function loadData() {
+      fetch("/api/fetch/")
+        .then(response => response.json())
+        .then(data => {
+          const list = document.getElementById("data-list");
+          list.innerHTML = '';
+          data.entries.slice(0, 10).forEach(entry => {
+            const li = document.createElement("li");
+            li.textContent = `${entry.API} - ${entry.Description}`;
+            list.appendChild(li);
+          });
+        })
+        .catch(error => console.error("Error fetching API data:", error));
+    }
+  </script>
+</body>
+</html>
